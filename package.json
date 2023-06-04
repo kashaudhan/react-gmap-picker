@@ -10,6 +10,14 @@
   "engines": {
     "node": ">=10"
   },
+  "keywords": [
+    "react",
+    "google",
+    "google-maps",
+    "google-maps-marker",
+    "maps-marker",
+    "marker"
+  ],
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
