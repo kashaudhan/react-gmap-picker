@@ -13,7 +13,7 @@ npm install --save react-gmap-picker
 ```
 or
 ```bash
-yarn install react-gmap-picker
+yarn add react-gmap-picker
 ```
 
 ## Usage
