@@ -95,7 +95,3 @@ export default App;
 A special thanks to @phamtung1 for inspiration:
 
 [![](https://avatars.githubusercontent.com/u/11594890?v=4&size=50)](https://github.com/phamtung1)
-
-## License
-
-MIT © [phamtung1](https://github.com/phamtung1)
