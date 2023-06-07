@@ -43,6 +43,10 @@
   },
   "name": "react-gmap-picker",
   "author": "kashaudhan",
+  "repository": {
+    "url": "https://github.com/kashaudhan/react-gmap-picker"
+  },
+  "homepage": "https://github.com/kashaudhan/react-gmap-picker",
   "module": "dist/react-gmap-picker.esm.js",
   "size-limit": [
     {
