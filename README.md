@@ -1,12 +1,12 @@
 
-# Project Title
+# react-gmap-picker
 
 React google maps location picker/marker (latitude, longitude)
 
 
 ## Table of Contents
 
-- [Project Title](#project-title)
+- [react-gmap-picker](#react-gmap-picker)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Usage/Examples](#usageexamples)
@@ -75,7 +75,7 @@ const App = () => {
             apiKey="AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
           />
         </div>
-      {/* With custom icon */}
+      {/* With custom icon & always fixed marker in center */}
         <div className="column">
           <h4>Map 2 (satellite)</h4>
           <Picker
@@ -85,9 +85,8 @@ const App = () => {
             style={{ height: '700px' }}
             onChangeLocation={handleChangeLocation}
             onChangeZoom={handleChangeZoom}
-            icon={
-              'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
-            }
+            alwaysCentered={true}
+            icon={'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'}
             apiKey="AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
           />
         </div>
