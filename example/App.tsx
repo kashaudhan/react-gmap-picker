@@ -57,6 +57,7 @@ const App = () => {
             style={{ height: '700px' }}
             onChangeLocation={handleChangeLocation}
             onChangeZoom={handleChangeZoom}
+            alwaysCentered={true}
             icon={
               'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
             }

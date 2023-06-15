@@ -16,6 +16,7 @@ const Picker = (props: PickerProps) => {
     className,
     mapTypeId,
     icon,
+    alwaysCentered = false,
   } = props;
   const MAP_VIEW_ID = `google-map-view-${Math.random()
     .toString(36)
@@ -50,7 +51,7 @@ const Picker = (props: PickerProps) => {
       marker.current = new Google.maps.Marker({
         position: validLocation,
         map: map.current,
-        draggable: true,
+        draggable: alwaysCentered ? false : true,
         icon,
       });
       Google.maps.event.addListener(
@@ -62,12 +63,19 @@ const Picker = (props: PickerProps) => {
       marker.current.setPosition(validLocation);
     }
 
-    map.current.addListener('click', function(event: any) {
-      const clickedLocation = event.latLng;
+    if (alwaysCentered) {
+      map.current.addListener('drag', () => {
+        marker.current.setPosition(map.current.getCenter());
+        handleChangeLocation();
+      });
+    } else {
+      map.current.addListener('click', function(event: any) {
+        const clickedLocation = event.latLng;
 
-      marker.current.setPosition(clickedLocation);
-      handleChangeLocation();
-    });
+        marker.current.setPosition(clickedLocation);
+        handleChangeLocation();
+      });
+    }
 
     map.current.addListener('zoom_changed', handleChangeZoom);
   };

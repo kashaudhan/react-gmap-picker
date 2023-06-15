@@ -1,22 +1,29 @@
+
 # react-gmap-picker
 
-React google maps location picker (latitude, longitude)
+React google maps location picker/marker (latitude, longitude)
 
-[![NPM](https://img.shields.io/npm/v/react-google-map-picker.svg)](https://www.npmjs.com/package/react-google-map-picker)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![abc](https://img.shields.io/badge/react-17-blue)](https://reactjs.org/blog/2020/10/20/react-v17.html)
 
-## Install
+## Table of Contents
 
-```bash
+- [react-gmap-picker](#react-gmap-picker)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage/Examples](#usageexamples)
+  - [Props](#props)
+
+## Installation
+
+
+Install react-gmap-picker and its dependeices
+```sh
 npm install --save react-gmap-picker
 ```
 or
-```bash
+```sh
 yarn add react-gmap-picker
 ```
-
-## Usage
+## Usage/Examples
 
 ```jsx
 import { useState } from 'react';
@@ -68,7 +75,7 @@ const App = () => {
             apiKey="AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
           />
         </div>
-      {/* With custom icon */}
+      {/* With custom icon & always fixed marker in center */}
         <div className="column">
           <h4>Map 2 (satellite)</h4>
           <Picker
@@ -78,9 +85,8 @@ const App = () => {
             style={{ height: '700px' }}
             onChangeLocation={handleChangeLocation}
             onChangeZoom={handleChangeZoom}
-            icon={
-              'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
-            }
+            alwaysCentered={true}
+            icon={'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'}
             apiKey="AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
           />
         </div>
@@ -91,6 +97,23 @@ const App = () => {
 
 export default App;
 ```
+
+
+## Props
+
+| Parameter | Type     | Default  | Description                |
+| :-------- | :------- | ---------| :------------------------- |
+| `apiKey` | `string` | **Required** | **Required**. Google maps API key |
+| `defaultLocation` | `{lat: number; lng: number}` |  **Required** |  **Required**. Default coordinate. |
+| `zoom` | `{lat: number; lng: number}` | 7 | Default coordinate. |
+| `onChangeLocation` | `(lat: number, lng: number) => void` | null | Executes when location changes. |
+| `onChangeZoom` | `(zoom: number) => void` | null | Executes when room level changes. |
+| `style` | `any` | { width: '100%', height: '600px' } | Map container style. |
+| `className` | `string` | undefined | Map className. |
+| `mapTypeId` | [google.maps.MapTypeId](https://developers.google.com/maps/documentation/javascript/maptypes) | undefined | Map type you want to see. |
+| `icon` | `string \| null \| undefined ` \| [google.maps.Icon](https://developers.google.com/maps/documentation/javascript/examples/icon-simple) \| [google.maps.Symbols](https://developers.google.com/maps/documentation/javascript/symbols)  | undefined | Marker icon. |
+| `alwaysCentered` | `boolean` | false | Fix marker in center if `true`. |
+
 
 A special thanks to @phamtung1 for inspiration:
 
