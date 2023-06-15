@@ -1,6 +1,6 @@
 # react-gmap-picker
 
-React google maps location picker (latitude, longitude)
+React google maps location picker (latitude, longitude) with custom marker icon
 
 [![NPM](https://img.shields.io/npm/v/react-google-map-picker.svg)](https://www.npmjs.com/package/react-google-map-picker)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
