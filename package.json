@@ -1,5 +1,5 @@
 {
-  "version": "0.3.1",
+  "version": "0.3.2",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -44,9 +44,13 @@
   "name": "react-gmap-picker",
   "author": "kashaudhan",
   "repository": {
+    "type": "git",
     "url": "https://github.com/kashaudhan/react-gmap-picker"
   },
   "homepage": "https://github.com/kashaudhan/react-gmap-picker",
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com/"
+  },
   "module": "dist/react-gmap-picker.esm.js",
   "size-limit": [
     {
