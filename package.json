@@ -48,9 +48,6 @@
     "url": "https://github.com/kashaudhan/react-gmap-picker"
   },
   "homepage": "https://github.com/kashaudhan/react-gmap-picker",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "module": "dist/react-gmap-picker.esm.js",
   "size-limit": [
     {
