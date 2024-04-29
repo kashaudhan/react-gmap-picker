@@ -13,21 +13,22 @@ export const isMapLoaded = (id: string): boolean => {
   return false;
 };
 
-export const loadScript = (src: string, id: string) => {
-  if (isMapLoaded(id)) {
-    // Make sure the script is loaded
-    return new Promise(resolve => setTimeout(resolve, 500));
-  }
+export const loadScript = (API_KEY: string) => {
+
+  const el = document.getElementById("google-map");
+
+  if(el) return;
 
   const script = document.createElement('script');
-  script.setAttribute('async', '');
-  script.setAttribute('id', id);
-  script.src = src;
-  (document.querySelector('head') as any).appendChild(script);
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap`;
+  script.setAttribute("type", "module");
+  script.setAttribute('id', "google-map");
+  document.head.appendChild(script);
 
   return new Promise<void>(resolve => {
-    script.onload = () => {
-      resolve();
+    (window as any).initMap = function() {
+      // JS API is loaded and available
+      resolve()
     };
   });
 };
