@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
-import { loadScript, isValidLocation } from './utils';
+import { isValidLocation } from './utils';
 import { PickerProps } from './types';
+import { Loader } from '@googlemaps/js-api-loader';
 
 const Picker = (props: PickerProps) => {
   const {
@@ -44,13 +45,26 @@ const Picker = (props: PickerProps) => {
       ? defaultLocation
       : { lat: 0, lng: 0 };
 
-    map.current = new google.maps.Map(document.getElementById(MAP_VIEW_ID)!, {
-      center: validLocation,
-      zoom: zoom,
-      mapId: MAP_VIEW_ID,
-      ...(mapTypeId && { mapTypeId }),
+    const loader = new Loader({
+      apiKey: apiKey,
+      version: 'weekly',
     });
 
+    loader.load().then(async () => {
+      const validLocation = isValidLocation(defaultLocation)
+        ? defaultLocation
+        : { lat: 0, lng: 0 };
+      const { Map } = (await google.maps.importLibrary(
+        'maps'
+      )) as google.maps.MapsLibrary;
+      map.current = new Map(document.getElementById(MAP_VIEW_ID)!, {
+        center: validLocation,
+        zoom: zoom,
+        mapId: MAP_VIEW_ID,
+        ...(mapTypeId && { mapTypeId }),
+      });
+    });
+    
     if (!marker.current) {
       const { AdvancedMarkerElement } = (await google.maps.importLibrary(
         'marker'
@@ -94,7 +108,10 @@ const Picker = (props: PickerProps) => {
   }, [zoom]);
 
   useEffect(() => {
-    loadScript(apiKey)?.then(loadMap);
+    (async () => {
+      // await loadScript(apiKey);
+      await loadMap()
+    })()
   }, []);
 
   return <div id={MAP_VIEW_ID} style={componentStyle} className={className} />;
