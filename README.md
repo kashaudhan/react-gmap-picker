@@ -27,7 +27,7 @@ yarn add react-gmap-picker
 
 ```jsx
 import { useState } from 'react';
-import { Picker } from '../src';
+import { Picker } from 'react-gmap-picker';
 import React from 'react';
 
 const INITIAL_LOCATION = { lat: 13.4, lng: 77.0 };
