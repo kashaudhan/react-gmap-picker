@@ -1,7 +1,7 @@
 
 # react-gmap-picker
 
-React google maps location picker/marker (latitude, longitude)
+React google maps location picker/marker with `Advanced Marker`
 
 
 ## Table of Contents
@@ -27,11 +27,13 @@ yarn add react-gmap-picker
 
 ```jsx
 import { useState } from 'react';
-import { Picker } from 'react-gmap-picker';
+import { Picker } from '../src';
 import React from 'react';
 
 const INITIAL_LOCATION = { lat: 13.4, lng: 77.0 };
 const INITIAL_ZOOM = 10;
+
+const API_KEY = process.env.API_KEY as string;
 
 const App = () => {
   const [defaultLocation, setDefaultLocation] = useState(INITIAL_LOCATION);
@@ -62,34 +64,17 @@ const App = () => {
       <label>Zoom:</label>
       <input type="text" value={zoom} disabled />
 
-      <div className="row">
-        <div className="column">
-          <h4>Map 1 (roadmap)</h4>
-          <Picker
-            defaultLocation={defaultLocation}
-            zoom={zoom}
-            mapTypeId="roadmap"
-            style={{ height: '700px' }}
-            onChangeLocation={handleChangeLocation}
-            onChangeZoom={handleChangeZoom}
-            apiKey="AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
-          />
-        </div>
-      {/* With custom icon & always fixed marker in center */}
-        <div className="column">
-          <h4>Map 2 (satellite)</h4>
-          <Picker
-            defaultLocation={defaultLocation}
-            zoom={zoom}
-            mapTypeId="satellite"
-            style={{ height: '700px' }}
-            onChangeLocation={handleChangeLocation}
-            onChangeZoom={handleChangeZoom}
-            alwaysCentered={true}
-            icon={'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'}
-            apiKey="AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
-          />
-        </div>
+      <div>
+        <h4>Map 1 (roadmap)</h4>
+        <Picker
+          defaultLocation={defaultLocation}
+          zoom={zoom}
+          mapTypeId="roadmap"
+          style={{ height: '700px' }}
+          onChangeLocation={handleChangeLocation}
+          onChangeZoom={handleChangeZoom}
+          apiKey={API_KEY}
+        />
       </div>
     </div>
   );
@@ -111,10 +96,4 @@ export default App;
 | `style` | `any` | { width: '100%', height: '600px' } | Map container style. |
 | `className` | `string` | undefined | Map className. |
 | `mapTypeId` | [google.maps.MapTypeId](https://developers.google.com/maps/documentation/javascript/maptypes) | undefined | Map type you want to see. |
-| `icon` | `string \| null \| undefined ` \| [google.maps.Icon](https://developers.google.com/maps/documentation/javascript/examples/icon-simple) \| [google.maps.Symbols](https://developers.google.com/maps/documentation/javascript/symbols)  | undefined | Marker icon. |
-| `alwaysCentered` | `boolean` | false | Fix marker in center if `true`. |
 
-
-A special thanks to @phamtung1 for inspiration:
-
-[![](https://avatars.githubusercontent.com/u/11594890?v=4&size=20)](https://github.com/phamtung1)

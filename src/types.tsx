@@ -12,6 +12,6 @@ export type PickerProps = {
   style?: any;
   className?: string;
   mapTypeId?: google.maps.MapTypeId;
-  icon?: string | google.maps.Icon | google.maps.Symbol | null | undefined; // https://developers.google.com/maps/documentation/javascript/markers#icons
+  // icon?: string | google.maps.Icon | google.maps.Symbol | null | undefined; // https://developers.google.com/maps/documentation/javascript/markers#icons
   alwaysCentered?: boolean
 };

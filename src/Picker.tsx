@@ -2,9 +2,6 @@ import React, { useRef, useEffect } from 'react';
 import { loadScript, isValidLocation } from './utils';
 import { PickerProps } from './types';
 
-const GOOGLE_SCRIPT_URL =
-  'https://maps.googleapis.com/maps/api/js?libraries=places&key=';
-
 const Picker = (props: PickerProps) => {
   const {
     apiKey,
@@ -15,8 +12,6 @@ const Picker = (props: PickerProps) => {
     style,
     className,
     mapTypeId,
-    icon,
-    alwaysCentered = false,
   } = props;
   const MAP_VIEW_ID = `google-map-view-${Math.random()
     .toString(36)
@@ -24,10 +19,19 @@ const Picker = (props: PickerProps) => {
   const map = useRef<any>(null);
   const marker = useRef<any>(null);
 
-  const handleChangeLocation = () => {
+  const componentStyle = Object.assign(
+    { width: '100%', height: '600px' },
+    style || {}
+  );
+
+  const handleChangeLocation = (e: any) => {
     if (onChangeLocation) {
-      const currentLocation = marker.current.getPosition();
-      onChangeLocation(currentLocation.lat(), currentLocation.lng());
+      if (e.latLng) {
+        const currentLocation = e.latLng;
+        onChangeLocation(currentLocation.lat(), currentLocation.lng());
+      } else if (e.lat && e.lng) {
+        onChangeLocation(e.lat(), e.lng());
+      }
     }
   };
 
@@ -35,61 +39,51 @@ const Picker = (props: PickerProps) => {
     onChangeZoom && onChangeZoom(map.current.getZoom());
   };
 
-  const loadMap = () => {
-    const Google = window.google;
+  const loadMap = async () => {
     const validLocation = isValidLocation(defaultLocation)
       ? defaultLocation
       : { lat: 0, lng: 0 };
 
-    map.current = new Google.maps.Map(document.getElementById(MAP_VIEW_ID)!, {
+    map.current = new google.maps.Map(document.getElementById(MAP_VIEW_ID)!, {
       center: validLocation,
       zoom: zoom,
+      mapId: MAP_VIEW_ID,
       ...(mapTypeId && { mapTypeId }),
     });
 
     if (!marker.current) {
-      marker.current = new Google.maps.Marker({
+      const { AdvancedMarkerElement } = (await google.maps.importLibrary(
+        'marker'
+      )) as any;
+
+      marker.current = new AdvancedMarkerElement({
+        title: 'Selected location',
         position: validLocation,
         map: map.current,
-        draggable: alwaysCentered ? false : true,
-        icon,
+        gmpDraggable: true,
       });
-      Google.maps.event.addListener(
+      google.maps.event.addListener(
         marker.current,
         'dragend',
         handleChangeLocation
       );
     } else {
-      marker.current.setPosition(validLocation);
+      marker.current.position = validLocation;
     }
+    map.current.addListener('click', function(event: any) {
+      const clickedLocation = event.latLng;
 
-    if (alwaysCentered) {
-      map.current.addListener('drag', () => {
-        marker.current.setPosition(map.current.getCenter());
-        handleChangeLocation();
-      });
-    } else {
-      map.current.addListener('click', function(event: any) {
-        const clickedLocation = event.latLng;
-
-        marker.current.setPosition(clickedLocation);
-        handleChangeLocation();
-      });
-    }
+      marker.current.position = clickedLocation;
+      handleChangeLocation(clickedLocation);
+    });
 
     map.current.addListener('zoom_changed', handleChangeZoom);
   };
 
   useEffect(() => {
-    loadScript(GOOGLE_SCRIPT_URL + apiKey, 'google-maps-' + apiKey).then(
-      loadMap
-    );
-  }, []);
-
-  useEffect(() => {
     if (marker.current) {
       map.current.setCenter(defaultLocation);
-      marker.current.setPosition(defaultLocation);
+      marker.current.position = defaultLocation;
     }
   }, [defaultLocation]);
 
@@ -99,10 +93,9 @@ const Picker = (props: PickerProps) => {
     }
   }, [zoom]);
 
-  const componentStyle = Object.assign(
-    { width: '100%', height: '600px' },
-    style || {}
-  );
+  useEffect(() => {
+    loadScript(apiKey)?.then(loadMap);
+  }, []);
 
   return <div id={MAP_VIEW_ID} style={componentStyle} className={className} />;
 };

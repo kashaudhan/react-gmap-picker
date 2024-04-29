@@ -5,6 +5,8 @@ import React from 'react';
 const INITIAL_LOCATION = { lat: 13.4, lng: 77.0 };
 const INITIAL_ZOOM = 10;
 
+const API_KEY = process.env.API_KEY as string;
+
 const App = () => {
   const [defaultLocation, setDefaultLocation] = useState(INITIAL_LOCATION);
   const [location, setLocation] = useState(defaultLocation);
@@ -34,36 +36,17 @@ const App = () => {
       <label>Zoom:</label>
       <input type="text" value={zoom} disabled />
 
-      <div className="row">
-        <div className="column">
-          <h4>Map 1 (roadmap)</h4>
-          <Picker
-            defaultLocation={defaultLocation}
-            zoom={zoom}
-            mapTypeId="roadmap"
-            style={{ height: '700px' }}
-            onChangeLocation={handleChangeLocation}
-            onChangeZoom={handleChangeZoom}
-            apiKey="AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
-          />
-        </div>
-
-        <div className="column">
-          <h4>Map 2 (satellite)</h4>
-          <Picker
-            defaultLocation={defaultLocation}
-            zoom={zoom}
-            mapTypeId="satellite"
-            style={{ height: '700px' }}
-            onChangeLocation={handleChangeLocation}
-            onChangeZoom={handleChangeZoom}
-            alwaysCentered={true}
-            icon={
-              'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
-            }
-            apiKey="AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8"
-          />
-        </div>
+      <div>
+        <h4>Map 1 (roadmap)</h4>
+        <Picker
+          defaultLocation={defaultLocation}
+          zoom={zoom}
+          mapTypeId="roadmap"
+          style={{ height: '700px' }}
+          onChangeLocation={handleChangeLocation}
+          onChangeZoom={handleChangeZoom}
+          apiKey={API_KEY}
+        />
       </div>
     </div>
   );
