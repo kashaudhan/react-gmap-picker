@@ -11,7 +11,7 @@ export type PickerProps = {
   onChangeZoom?(zoom: number): void;
   style?: any;
   className?: string;
-  mapTypeId?: google.maps.MapTypeId;
+  mapTypeId?: google.maps.MapTypeId | undefined | string;
   // icon?: string | google.maps.Icon | google.maps.Symbol | null | undefined; // https://developers.google.com/maps/documentation/javascript/markers#icons
-  alwaysCentered?: boolean
+  // alwaysCentered?: boolean
 };
