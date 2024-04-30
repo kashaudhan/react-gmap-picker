@@ -41,28 +41,26 @@ const Picker = (props: PickerProps) => {
   };
 
   const loadMap = async () => {
+    if(!window.google || !window.google.maps) {
+      const loader = new Loader({
+        apiKey: apiKey,
+        version: 'weekly',
+      });
+
+      await loader.load()
+    }
     const validLocation = isValidLocation(defaultLocation)
       ? defaultLocation
       : { lat: 0, lng: 0 };
 
-    const loader = new Loader({
-      apiKey: apiKey,
-      version: 'weekly',
-    });
-
-    loader.load().then(async () => {
-      const validLocation = isValidLocation(defaultLocation)
-        ? defaultLocation
-        : { lat: 0, lng: 0 };
-      const { Map } = (await google.maps.importLibrary(
-        'maps'
-      )) as google.maps.MapsLibrary;
-      map.current = new Map(document.getElementById(MAP_VIEW_ID)!, {
-        center: validLocation,
-        zoom: zoom,
-        mapId: MAP_VIEW_ID,
-        ...(mapTypeId && { mapTypeId }),
-      });
+    const { Map } = (await google.maps.importLibrary(
+      'maps'
+    )) as google.maps.MapsLibrary;
+    map.current = new Map(document.getElementById(MAP_VIEW_ID)!, {
+      center: validLocation,
+      zoom: zoom,
+      mapId: MAP_VIEW_ID,
+      ...(mapTypeId && { mapTypeId }),
     });
     
     if (!marker.current) {
